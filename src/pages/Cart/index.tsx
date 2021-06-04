@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   MdDelete,
   MdAddCircleOutline,
@@ -18,11 +17,12 @@ interface Product {
 }
 
 const Cart = (): JSX.Element => {
-  const { cart, addProduct, removeProduct, updateProductAmount } = useCart();
+  const { cart, removeProduct, updateProductAmount } = useCart();
 
   const cartFormatted = cart.map(product => ({
     ...product,
-    priceFormatted: formatPrice(product.price)
+    priceFormatted: formatPrice(product.price),
+    subtotal: formatPrice(product.amount * product.price),
   }));
   const total =
     formatPrice(
@@ -31,16 +31,16 @@ const Cart = (): JSX.Element => {
       }, 0)
     )
 
-  async function handleProductIncrement(product: Product) {
-    await addProduct(product.id);
+  function handleProductIncrement(product: Product) {
+    updateProductAmount( {productId: product.id, amount: product.amount + 1});
   }
 
-  async function handleProductDecrement(product: Product) {
-    await updateProductAmount( {productId: product.id, amount: product.amount - 1});
+  function handleProductDecrement(product: Product) {
+    updateProductAmount( {productId: product.id, amount: product.amount - 1});
   }
 
-  async function handleRemoveProduct(productId: number) {
-    await removeProduct(productId);
+  function handleRemoveProduct(productId: number) {
+    removeProduct(productId);
   }
 
   return (
@@ -91,7 +91,7 @@ const Cart = (): JSX.Element => {
                 </div>
               </td>
               <td>
-                <strong>{formatPrice(product.amount * product.price)}</strong>
+                <strong>{product.subtotal}</strong>
               </td>
               <td>
                 <button
