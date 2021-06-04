@@ -19,7 +19,6 @@ interface Product {
 
 const Cart = (): JSX.Element => {
   const { cart, addProduct, removeProduct, updateProductAmount } = useCart();
-  console.log(cart);
 
   const cartFormatted = cart.map(product => ({
     ...product,
@@ -31,7 +30,6 @@ const Cart = (): JSX.Element => {
         return sumTotal + product.price * product.amount;
       }, 0)
     )
-  console.log(cartFormatted);
 
   function handleProductIncrement(product: Product) {
     addProduct(product.id);
@@ -42,7 +40,7 @@ const Cart = (): JSX.Element => {
   }
 
   function handleRemoveProduct(productId: number) {
-    // TODO
+    removeProduct(productId);
   }
 
   return (
@@ -99,7 +97,7 @@ const Cart = (): JSX.Element => {
                 <button
                   type="button"
                   data-testid="remove-product"
-                // onClick={() => handleRemoveProduct(product.id)}
+                  onClick={() => handleRemoveProduct(product.id)}
                 >
                   <MdDelete size={20} />
                 </button>
