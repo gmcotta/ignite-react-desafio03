@@ -69,9 +69,16 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     amount,
   }: UpdateProductAmount) => {
     try {
-      // TODO
+      const productInCart = cart.find(product => product.id === productId);
+      if (productInCart) {
+        productInCart.amount = amount;
+        setCart([...cart]);
+      }
+
+      localStorage.setItem('@RocketShoes:cart', JSON.stringify(cart));
     } catch {
       // TODO
+      toast.error('Erro na alteração de quantidade do produto');
     }
   };
 
