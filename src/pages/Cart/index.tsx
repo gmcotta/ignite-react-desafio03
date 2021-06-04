@@ -31,16 +31,16 @@ const Cart = (): JSX.Element => {
       }, 0)
     )
 
-  function handleProductIncrement(product: Product) {
-    addProduct(product.id);
+  async function handleProductIncrement(product: Product) {
+    await addProduct(product.id);
   }
 
-  function handleProductDecrement(product: Product) {
-    updateProductAmount( {productId: product.id, amount: product.amount - 1});
+  async function handleProductDecrement(product: Product) {
+    await updateProductAmount( {productId: product.id, amount: product.amount - 1});
   }
 
-  function handleRemoveProduct(productId: number) {
-    removeProduct(productId);
+  async function handleRemoveProduct(productId: number) {
+    await removeProduct(productId);
   }
 
   return (
